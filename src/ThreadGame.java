@@ -6,61 +6,84 @@ import java.net.Socket;
 
 public class ThreadGame extends Thread{
 
-    Socket jogador;
+    Socket jogador1, jogador2;
     BufferedReader entradaJogador1, entradaJogador2;
     PrintWriter saidaJogador1, saidaJogador2;
 
-    public ThreadGame(Socket jogador) {
-        this.jogador = jogador;
+    public ThreadGame(Socket jogador1, Socket jogador2) {
+        this.jogador1 = jogador1;
+        this.jogador2 = jogador2;
     }
-
 
     @Override
     public void run() {
         try {
-            entradaJogador1 = new BufferedReader(new InputStreamReader(jogador.getInputStream()));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        try {
-            saidaJogador1 = new PrintWriter(jogador.getOutputStream(), true);
+            entradaJogador1 = new BufferedReader(new InputStreamReader(jogador1.getInputStream()));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
         try {
-            entradaJogador2 = new BufferedReader(new InputStreamReader(jogador.getInputStream()));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        try {
-            saidaJogador2 = new PrintWriter(jogador.getOutputStream(), true);
+            saidaJogador1 = new PrintWriter(jogador1.getOutputStream(), true);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
+        try {
+            entradaJogador2 = new BufferedReader(new InputStreamReader(jogador2.getInputStream()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            saidaJogador2 = new PrintWriter(jogador2.getOutputStream(), true);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
 
         saidaJogador1.println("Você é o Jogador 1");
         saidaJogador2.println("Você é o Jogador 2");
 
+
         String palpiteJogador1 = null, palpiteJogador2 = null;
+        String numeroJogador1 = null, numeroJogador2 = null;
         while (true) {
             try {
                 palpiteJogador1 = entradaJogador1.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-            System.out.println("Jogador 1: " + palpiteJogador1);
+
+            System.out.println("Jogador 1 palpite: " + palpiteJogador1);
 
             try {
                 palpiteJogador2 = entradaJogador2.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-            System.out.println("Jogador 2: " + palpiteJogador2);
 
-            String resultado = verificarResultado(palpiteJogador1, palpiteJogador2);
+            System.out.println("Jogador 2 palpite: " + palpiteJogador2);
+
+            try {
+                numeroJogador1 = entradaJogador1.readLine();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            System.out.println("Jogador 1 número: " + numeroJogador1);
+
+            try {
+                numeroJogador2 = entradaJogador2.readLine();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            System.out.println("Jogador 2 número: " + numeroJogador2);
+
+            String resultado = verificarResultado(palpiteJogador1, palpiteJogador2, numeroJogador1, numeroJogador2);
+            System.out.println("Resultado: " + resultado);
+
             saidaJogador1.println(resultado);
             saidaJogador2.println(resultado);
 
@@ -70,38 +93,41 @@ public class ThreadGame extends Thread{
 
         try {
             entradaJogador1.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        saidaJogador1.close();
-        try {
+            saidaJogador1.close();
             entradaJogador2.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            saidaJogador2.close();
+            jogador1.close();
+            jogador2.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        saidaJogador2.close();
+
     }
+    private static String verificarResultado(String palpiteJogador1, String palpiteJogador2,
+                                             String numeroJogador1, String numeroJogador2) {
+        int numJogador1 = Integer.parseInt(numeroJogador1);
+        int numJogador2 = Integer.parseInt(numeroJogador2);
 
-    private static String verificarResultado(String palpiteJogador1, String palpiteJogador2) {
-        int numeroJogador1 = (int) (Math.random() * 10) + 1;
-        int numeroJogador2 = (int) (Math.random() * 10) + 1;
+        System.out.println("Número do Jogador 1: " + numJogador1);
+        System.out.println("Número do Jogador 2: " + numJogador2);
 
-        System.out.println("Número do Jogador 1: " + numeroJogador1);
-        System.out.println("Número do Jogador 2: " + numeroJogador2);
+        int soma = numJogador1 + numJogador2;
 
-        int soma = numeroJogador1 + numeroJogador2;
+        String resultado = soma % 2 == 0 ? "par" : "ímpar";
 
-        String resultado = soma % 2 == 0 ? "par" : "impar";
+        String vencedor;
 
-        if (palpiteJogador1.equals(resultado) && palpiteJogador2.equals(resultado)) {
-            return "Empate. O número é " + soma + ", que é " + resultado + ".";
+        if (palpiteJogador1.equals(palpiteJogador2)) {
+            vencedor = "Empate";
         } else if (palpiteJogador1.equals(resultado)) {
-            return "Jogador 1 venceu. O número é " + soma + ", que é " + resultado + ".";
-        } else if (palpiteJogador2.equals(resultado)) {
-            return "Jogador 2 venceu. O número é " + soma + ", que é " + resultado + ".";
+            vencedor = "Jogador 1";
         } else {
-            return "Nenhum jogador venceu. O número é " + soma + ", que é " + resultado + ".";
+            vencedor = "Jogador 2";
         }
+
+        return "Resultado: " + resultado + ". " + vencedor + " venceu.";
     }
+
 }
+
 

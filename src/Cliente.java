@@ -21,14 +21,20 @@ public class Cliente {
             while ((mensagemRecebida = entrada.readLine()) != null) {
                 System.out.println("Servidor: " + mensagemRecebida);
 
-                if (mensagemRecebida.equalsIgnoreCase("Fim do jogo"))
+                if (mensagemRecebida.equalsIgnoreCase("Fim"))
                     break;
 
-                System.out.print("Digite seu palpite, o número aleatória é: (par ou impar): ");
+                System.out.print("Digite seu palpite (par ou ímpar): ");
                 String palpite = teclado.readLine();
+                System.out.print("Digite um número: ");
+                String numero = teclado.readLine();
 
                 saida.println(palpite);
+                saida.println(numero);
             }
+
+            String resultado = entrada.readLine();
+            System.out.println("Resultado: " + resultado);
 
             entrada.close();
             saida.close();
@@ -39,4 +45,3 @@ public class Cliente {
         }
     }
 }
-

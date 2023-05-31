@@ -13,16 +13,22 @@ public class Servidor {
             ServerSocket serverSocket = new ServerSocket(PORTA);
             System.out.println("Servidor iniciado na porta " + PORTA);
 
-            while(true) {
-                Socket jogador = serverSocket.accept();
-                System.out.println("Jogador 1 conectado: " + jogador);
-                ThreadGame threadGame = new ThreadGame(jogador);
+            while (true) {
+                Socket jogador1 = serverSocket.accept();
+                System.out.println("Jogador conectado: " + jogador1);
+
+                Socket jogador2 = serverSocket.accept();
+                System.out.println("Jogador conectado: " + jogador2);
+
+                ThreadGame threadGame = new ThreadGame(jogador1, jogador2);
                 threadGame.start();
             }
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
 

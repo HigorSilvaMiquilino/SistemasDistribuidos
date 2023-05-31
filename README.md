@@ -1,4 +1,4 @@
-# SistemasDistribuidos
+# SistemasDistribuidos A3 Ímpar ou par
 
 ## Bruno Andrade da Silva 125111373218
 
