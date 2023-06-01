@@ -11,7 +11,7 @@ public class ThreadGame extends Thread{
     PrintWriter saidaJogador1, saidaJogador2;
     private int pontuacaoJogador1 = 0;
     private int pontuacaoJogador2 = 0;
-    private int  pontuacaoMaxima = 5;
+    private int  pontuacaoMaxima = 3;
 
 
     public ThreadGame(Socket jogador1, Socket jogador2) {

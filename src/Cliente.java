@@ -46,8 +46,7 @@ public class Cliente {
             String resultado = entrada.readLine();
             System.out.println("Resultado: " + resultado);
 
-//            String placar = entrada.readLine();
-//            System.out.println("Placar: " + placar);
+
 
             entrada.close();
             saida.close();
