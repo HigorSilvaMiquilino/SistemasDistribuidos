@@ -19,11 +19,6 @@ public class ThreadGame extends Thread{
     public void run() {
         try {
             entradaJogador1 = new BufferedReader(new InputStreamReader(jogador1.getInputStream()));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
             saidaJogador1 = new PrintWriter(jogador1.getOutputStream(), true);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -31,20 +26,13 @@ public class ThreadGame extends Thread{
 
         try {
             entradaJogador2 = new BufferedReader(new InputStreamReader(jogador2.getInputStream()));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
             saidaJogador2 = new PrintWriter(jogador2.getOutputStream(), true);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-
         saidaJogador1.println("Você é o Jogador 1");
         saidaJogador2.println("Você é o Jogador 2");
-
 
         String palpiteJogador1 = null, palpiteJogador2 = null;
         String numeroJogador1 = null, numeroJogador2 = null;
@@ -54,31 +42,28 @@ public class ThreadGame extends Thread{
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
             System.out.println("Jogador 1 palpite: " + palpiteJogador1);
-
-            try {
-                palpiteJogador2 = entradaJogador2.readLine();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            System.out.println("Jogador 2 palpite: " + palpiteJogador2);
 
             try {
                 numeroJogador1 = entradaJogador1.readLine();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
             System.out.println("Jogador 1 número: " + numeroJogador1);
+
+
+            try {
+                palpiteJogador2 = entradaJogador2.readLine();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            System.out.println("Jogador 2 palpite: " + palpiteJogador2);
 
             try {
                 numeroJogador2 = entradaJogador2.readLine();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
             System.out.println("Jogador 2 número: " + numeroJogador2);
 
             String resultado = verificarResultado(palpiteJogador1, palpiteJogador2, numeroJogador1, numeroJogador2);
@@ -111,9 +96,10 @@ public class ThreadGame extends Thread{
         System.out.println("Número do Jogador 1: " + numJogador1);
         System.out.println("Número do Jogador 2: " + numJogador2);
 
+
         int soma = numJogador1 + numJogador2;
 
-        String resultado = soma % 2 == 0 ? "par" : "ímpar";
+        String resultado = soma % 2 == 0 ? "par" : "impar";
 
         String vencedor;
 
@@ -125,9 +111,7 @@ public class ThreadGame extends Thread{
             vencedor = "Jogador 2";
         }
 
-        return "Resultado: " + resultado + ". " + vencedor + " venceu.";
+        return "Resultado: " + (numJogador1 + numJogador2) +" que é "+ resultado + ", " + vencedor + " venceu.";
     }
 
 }
-
-

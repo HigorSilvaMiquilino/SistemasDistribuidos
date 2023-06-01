@@ -17,6 +17,15 @@ public class Cliente {
 
             BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
 
+            System.out.println("Escolha a modalidade:");
+            System.out.println("1. Jogador vs Jogador");
+            System.out.println("2. Jogador vs Computador");
+            System.out.print("Opção: ");
+            String modalidade = teclado.readLine();
+
+            saida.println(modalidade);
+
+
             String mensagemRecebida;
             while ((mensagemRecebida = entrada.readLine()) != null) {
                 System.out.println("Servidor: " + mensagemRecebida);
@@ -24,7 +33,7 @@ public class Cliente {
                 if (mensagemRecebida.equalsIgnoreCase("Fim"))
                     break;
 
-                System.out.print("Digite seu palpite (par ou ímpar): ");
+                System.out.print("Digite seu palpite (par ou impar): ");
                 String palpite = teclado.readLine();
                 System.out.print("Digite um número: ");
                 String numero = teclado.readLine();
