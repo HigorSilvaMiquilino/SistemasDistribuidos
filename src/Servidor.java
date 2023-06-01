@@ -34,8 +34,6 @@ public class Servidor {
                     threadComputador.start();
                 }
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
