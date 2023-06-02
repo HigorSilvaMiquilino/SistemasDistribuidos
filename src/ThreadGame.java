@@ -13,7 +13,6 @@ public class ThreadGame extends Thread{
     private int pontuacaoJogador2 = 0;
     private int  pontuacaoMaxima = 3;
 
-
     public ThreadGame(Socket jogador1, Socket jogador2) {
         this.jogador1 = jogador1;
         this.jogador2 = jogador2;
@@ -55,7 +54,6 @@ public class ThreadGame extends Thread{
             }
             System.out.println("Jogador 1 número: " + numeroJogador1);
 
-
             try {
                 palpiteJogador2 = entradaJogador2.readLine();
             } catch (IOException ex) {
@@ -73,29 +71,32 @@ public class ThreadGame extends Thread{
             String resultado = verificarResultado(palpiteJogador1, palpiteJogador2, numeroJogador1, numeroJogador2);
             System.out.println("Resultado: " + resultado);
 
-
             if (resultado.contains("Jogador 1")) {
                 pontuacaoJogador1++;
             } else if (resultado.contains("Jogador 2")) {
                 pontuacaoJogador2++;
             }
 
-           System.out.println("Placar:");
-           System.out.println("Jogador 1: " + pontuacaoJogador1 + " ponto(s)");
-           System.out.println("Jogador 2: " + pontuacaoJogador2 + " ponto(s)");
+            System.out.println("Placar:");
+            System.out.println("Jogador 1: " + pontuacaoJogador1 + " ponto(s)");
+            System.out.println("Jogador 2: " + pontuacaoJogador2 + " ponto(s)");
+
+            String contexto = "Jogordor 1: " + palpiteJogador1 + "," + numeroJogador1 + " -- "+ " Jogador 2: " + palpiteJogador2 +","+numeroJogador2;
 
             if (pontuacaoJogador1 >= pontuacaoMaxima) {
-                saidaJogador1.println("Fim - Jogador 1 venceu!");
-                saidaJogador2.println("Fim - Jogador 1 venceu!");
-               break;
+                saidaJogador1.println("Fim - Jogador 1 venceu!"+" "+resultado+" "+contexto);
+                saidaJogador2.println("Fim - Jogador 1 venceu!"+" "+resultado+" "+contexto);
+                break;
             } else if (pontuacaoJogador2 >= pontuacaoMaxima) {
-               saidaJogador1.println("Fim - Jogador 2 venceu!");
-               saidaJogador2.println("Fim - Jogador 2 venceu!");
+                saidaJogador1.println("Fim - Jogador 2 venceu!"+" "+resultado+" "+contexto);
+                saidaJogador2.println("Fim - Jogador 2 venceu!"+" "+resultado+" "+contexto);
                 break;
             }
 
-            saidaJogador1.println(resultado + "Placar : "+"Jogador 1: " + pontuacaoJogador1 + " ponto(s)"+" Jogador 2: " + pontuacaoJogador2 + " ponto(s)");
-            saidaJogador2.println(resultado + "Placar : "+"Jogador 1: " + pontuacaoJogador1 + " ponto(s)"+" Jogador 2: " + pontuacaoJogador2 + " ponto(s)");
+
+
+            saidaJogador1.println(resultado + "Placar : "+"Jogador 1: " + pontuacaoJogador1 + " ponto(s)"+ " , " +" Jogador 2: " + pontuacaoJogador2 + " ponto(s) -- "+contexto);
+            saidaJogador2.println(resultado + "Placar : "+"Jogador 1: " + pontuacaoJogador1 + " ponto(s)"+ " , " +" Jogador 2: " + pontuacaoJogador2 + " ponto(s) -- "+contexto);
 
             if (resultado.equals("Fim"))
                 break;
@@ -112,9 +113,7 @@ public class ThreadGame extends Thread{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
-
 
     private static String verificarResultado(String palpiteJogador1, String palpiteJogador2,
                                              String numeroJogador1, String numeroJogador2) {
@@ -124,7 +123,6 @@ public class ThreadGame extends Thread{
 
         System.out.println("Número do Jogador 1: " + numJogador1);
         System.out.println("Número do Jogador 2: " + numJogador2);
-
 
         int soma = numJogador1 + numJogador2;
 
@@ -142,5 +140,4 @@ public class ThreadGame extends Thread{
         return "Resultado: " + (numJogador1 + numJogador2) +", que é "+ resultado + ", " + vencedor + " venceu. ";
 
     }
-
 }

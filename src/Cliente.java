@@ -8,7 +8,6 @@ public class Cliente {
     private static final String HOST = "localhost";
     private static final int PORTA = 12345;
 
-
     public static void main(String[] args) {
         try {
             Socket socket = new Socket(HOST, PORTA);
@@ -31,6 +30,9 @@ public class Cliente {
             while ((mensagemRecebida = entrada.readLine()) != null) {
                 System.out.println("Servidor: " + mensagemRecebida);
 
+                if (mensagemRecebida.startsWith("Fim -")){
+                    break;
+                }
 
                 System.out.print("Digite seu palpite (par ou impar): ");
                 String palpite = teclado.readLine();
@@ -41,10 +43,7 @@ public class Cliente {
                 saida.println(palpite);
                 saida.println(numero);
 
-
             }
-            String resultado = entrada.readLine();
-            System.out.println("Resultado: " + resultado);
 
 
 

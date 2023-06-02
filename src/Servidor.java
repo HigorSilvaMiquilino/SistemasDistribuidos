@@ -30,6 +30,7 @@ public class Servidor {
                     if (modalidadeJogador2 != null && modalidadeJogador2.equals("1")) {
                         ThreadGame threadGame = new ThreadGame(jogador1, jogador2);
                         threadGame.start();
+
                     } else if (modalidadeJogador2 != null && modalidadeJogador2.equals("2")) {
                         PrintWriter saidaJogador1 = new PrintWriter(jogador1.getOutputStream(), true);
                         saidaJogador1.println("Aguardando jogada do computador...");

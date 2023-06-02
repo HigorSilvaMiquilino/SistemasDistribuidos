@@ -28,7 +28,6 @@ public class ThreadComputador extends Thread {
             ex.printStackTrace();
         }
 
-
         String palpiteJogador = null;
         String numeroJogador = null;
         random = new Random();
@@ -49,7 +48,7 @@ public class ThreadComputador extends Thread {
             System.out.println("Jogador número: " + numeroJogador);
 
 
-            String palpiteComputador = (random.nextBoolean()) ? "par" : "ímpar";
+            String palpiteComputador = (random.nextBoolean()) ? "par" : "impar";
             System.out.println("Palpite do computador: " +palpiteComputador);
 
             int numeroComputadorAleatorio =  random.nextInt(10) + 1;
@@ -59,27 +58,28 @@ public class ThreadComputador extends Thread {
             String resultado = verificarResultado(palpiteJogador, palpiteComputador, numeroJogador,  numeroComputadorAleatorio);
             System.out.println("Resultado: " + resultado);
 
-
-            if (resultado.contains("Jogador 1")) {
+            if (resultado.contains("Jogador")) {
                 pontuacaoJogador++;
-            } else if (resultado.contains("Jogador 2")) {
+            } else if (resultado.contains("Computador")) {
                 pontuacaoComputador++;
             }
 
             System.out.println("Placar:");
-            System.out.println("Jogador 1: " + pontuacaoJogador + " ponto(s)");
-            System.out.println("Jogador 2: " + pontuacaoComputador + " ponto(s)");
+            System.out.println("Jogador: " + pontuacaoJogador + " ponto(s)");
+            System.out.println("Computador: " + pontuacaoComputador + " ponto(s)");
 
-            if (pontuacaoComputador >= pontuacaoMaxima) {
-                saidaJogador.println("Fim - Jogador 1 venceu!");
+            String contexto = "Jogador " + palpiteJogador +"," + numeroJogador +" -- "+ " Computador " + palpiteComputador +","+numeroComputadorAleatorio ;
+
+            if (pontuacaoJogador >= pontuacaoMaxima) {
+                saidaJogador.println("Fim - Jogador venceu!"+" "+ resultado + " " + contexto);
                 break;
             } else if (pontuacaoComputador >= pontuacaoMaxima) {
-                saidaJogador.println("Fim - Jogador 2 venceu!");
+                saidaJogador.println("Fim - Computador venceu!"+" "+ resultado + " " + contexto);
                 break;
             }
 
-            saidaJogador.println(resultado + "Placar : "+"Jogador 1: " + pontuacaoJogador + " ponto(s)"+" Computador: " + pontuacaoComputador + " ponto(s)");
 
+            saidaJogador.println(resultado + "Placar : "+"Jogador " + pontuacaoJogador + " ponto(s)"+ "," +" Computador " + pontuacaoComputador + " ponto(s) -- " + contexto);
 
             if (resultado.equals("Fim"))
                 break;
@@ -93,9 +93,7 @@ public class ThreadComputador extends Thread {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
-
 
     private static String verificarResultado(String palpiteJogador, String palpiteComputador,
                                              String numeroJogador, int numeroComputador) {
@@ -115,14 +113,13 @@ public class ThreadComputador extends Thread {
         if (palpiteJogador.equals(palpiteComputador)) {
             vencedor = "Empate";
         } else if (palpiteJogador.equals(resultado)) {
-            vencedor = "Jogador 1";
+            vencedor = "Jogador";
         } else {
-            vencedor = "Jogador 2";
+            vencedor = "Computador";
         }
         return "Resultado: " + soma +", que é "+ resultado + ", " + vencedor + " venceu. ";
 
     }
-
 }
 
 
